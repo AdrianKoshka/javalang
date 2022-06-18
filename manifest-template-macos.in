@@ -1,0 +1,2 @@
+exclude src/javalang/Contents/Home/ man*
+recursive-include src/javalang *
