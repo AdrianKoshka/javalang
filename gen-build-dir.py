@@ -60,9 +60,9 @@ def get_JDK_release(operatingSystem: str, architecture: str, javaVersion: str):
 def main():
     parser = argparse.ArgumentParser(
         description="Toggle switch ports for link testing.")
-    parser.add_argument("-o", "--operating-system", metavar='os_platform',
+    parser.add_argument("-o", "--operating-system", metavar='os',
                         type=str, help='Specify an operating system')
-    parser.add_argument("-a", "--architecture", metavar='architecture_platform',
+    parser.add_argument("-a", "--architecture", metavar='architecture',
                         type=str, help='Specify an architecture')
     parser.add_argument("-j", "--java-version", metavar='java_ver',
                         type=str, help='Specify a version of java', default='17.0.3+7')

@@ -33,3 +33,20 @@ The operating system supported are:
  - windows
 
 The architecture's are any architecture Adoptium supports for the particular OS.
+
+## Usage
+
+```
+usage: gen-build-dir.py [-h] [-o os] [-a architecture] [-j java_ver]
+
+Toggle switch ports for link testing.
+
+options:
+  -h, --help            show this help message and exit
+  -o os, --operating-system os
+                        Specify an operating system
+  -a architecture, --architecture architecture
+                        Specify an architecture
+  -j java_ver, --java-version java_ver
+                        Specify a version of java
+```
