@@ -18,7 +18,7 @@ $ cd linux-x64-javalang
 $ python -m build # you can make a venv first and install build within there if you want
 ```
 
-Now you can find your wheel in `linux-x64-javalang/dist`. Once you install the wheel, one way to use it just like [ziglang](https://pypi.org/project/ziglang/):
+Now you can find your wheel in `linux-x64-javalang/dist`. Once you install the wheel, you can use it just like [ziglang](https://pypi.org/project/ziglang/):
 
 ```python
 import sys, subprocess
