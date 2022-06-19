@@ -32,7 +32,7 @@ The operating system supported are:
  - mac
  - windows
 
-The architecture's are any architecture Adoptium supports for the particular OS.
+The architectures supported are any Adoptium supports for the particular OS.
 
 ## Usage
 
