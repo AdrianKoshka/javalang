@@ -1,0 +1,24 @@
+name: Build
+
+on: [push, pull_request]
+
+jobs:
+  build-linux-wheel:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Run gen-build-dir.py
+        run: |
+          python3 gen-build-dir.py -o linux -a x64
+  
+  build-macos-wheel:
+    runs-on: macos-12
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Run gen-build-dir.py
+        run: |
+          python3 gen-build-dir.py -o mac -a x64
