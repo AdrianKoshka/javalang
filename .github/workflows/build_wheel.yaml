@@ -21,5 +21,6 @@ jobs:
           python3 -m build
       - name: Install and test the wheel
         run: |
+          cd linux-x64-javalang
           python3 -m pip install dist/javalang*.whl
           python3 -m javalang --help
