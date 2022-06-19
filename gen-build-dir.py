@@ -2,6 +2,7 @@ import os
 import argparse
 import urllib.request
 import tarfile
+import configparser
 from zipfile import ZipFile
 import shutil
 
@@ -17,7 +18,7 @@ def make_project_dirs(operatingSystem: str, architecture: str):
         os.mkdir(os.path.join(f"{operatingSystem}-{architecture}-javalang", "src"))
 
 
-def copy_templates(operatingSystem: str, architecture: str):
+def copy_templates(operatingSystem: str, architecture: str, javaVersion: str):
     shutil.copy("pyproject.template.toml",
                 os.path.join(f'{operatingSystem}-{architecture}-javalang', 'pyproject.toml'))
     if operatingSystem == "linux" or "windows":
@@ -30,6 +31,11 @@ def copy_templates(operatingSystem: str, architecture: str):
                     os.path.join(f'{operatingSystem}-{architecture}-javalang', 'src', 'javalang', '__init__.py'))
         shutil.copy("manifest-template-macos.in",
                     os.path.join(f'{operatingSystem}-{architecture}-javalang', 'MANIFEST.in'))
+    config = configparser.ConfigParser()
+    config.read(os.path.join(f'{operatingSystem}-{architecture}-javalang', 'pyproject.toml'))
+    config['project']['version'] = f'"{javaVersion}"'
+    with open(os.path.join(f'{operatingSystem}-{architecture}-javalang', 'pyproject.toml'), 'w') as configfile:
+        config.write(configfile)
 
 def get_JDK_release(operatingSystem: str, architecture: str, javaVersion: str):
     if operatingSystem == 'windows':
@@ -71,6 +77,6 @@ def main():
 
     make_project_dirs(args.operating_system, args.architecture)
     get_JDK_release(args.operating_system, args.architecture, args.java_version)
-    copy_templates(args.operating_system, args.architecture)
+    copy_templates(args.operating_system, args.architecture, args.java_version)
 
 main()
