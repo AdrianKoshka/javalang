@@ -68,5 +68,5 @@ jobs:
       - name: Install and test the wheel
         run: |
           cd windows-x64-javalang
-          python3 -m pip install dist\javalang*.whl
+          python3 -m pip install dist\javalang-17.0.3+7-py3-none-any.whl
           python3 -m javalang --help
