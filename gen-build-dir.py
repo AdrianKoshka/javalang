@@ -26,7 +26,7 @@ def copy_templates(operatingSystem: str, architecture: str, javaVersion: str) ->
     manifest_destination = os.path.join(f'{operatingSystem}-{architecture}-javalang', 'MANIFEST.in')
     shutil.copy("pyproject.template.toml", pyproject_destination)
     match operatingSystem:
-        case['mac']:
+        case 'mac':
             shutil.copy("init_template_macos.py", init_destination)
             shutil.copy("manifest-template-macos.in", manifest_destination)
         case _:
@@ -40,22 +40,23 @@ def copy_templates(operatingSystem: str, architecture: str, javaVersion: str) ->
 
 def get_JDK_release(operatingSystem: str, architecture: str, javaVersion: str) -> None:
     match javaVersion:
-        case['17.0.3+7']:
-            github_url = 'https: // github.com/adoptium/temurin17-binaries'
+        case '17.0.3+7':
+            github_url = 'https://github.com/adoptium/temurin17-binaries'
             open_jdk_slug = 'OpenJDK17U'
             open_jdk_ver_slug = '17.0.3_7'
-        case['18.0.1+10']:
-            github_url = 'https: // github.com/adoptium/temurin18-binaries'
+        case '18.0.1+10':
+            github_url = 'https://github.com/adoptium/temurin18-binaries'
             open_jdk_slug = 'OpenJDK18U'
             open_jdk_ver_slug = '18.0.1_10'
         case _:
-            print("Unsupported version of java")
+            print(
+                "Unsupported version of java, supported versions are 17.0.3+7 and 18.0.1+10")
             exit(1)
     src_dir = os.path.join(f'{operatingSystem}-{architecture}-javalang', 'src')
     javalang_dir = os.path.join(f'{operatingSystem}-{architecture}-javalang', 'src', 'javalang')
     jdk_extract_dir = os.path.join(f'{operatingSystem}-{architecture}-javalang', 'src', f'jdk-{javaVersion}')
     match operatingSystem:
-        case ["windows"]:
+        case "windows":
             java_url = f'{github_url}/releases/download/jdk-{javaVersion}/{open_jdk_slug}-jdk_{architecture}_{operatingSystem}_hotspot_{open_jdk_ver_slug}.zip'
             win_zip_location = os.path.join(f'{operatingSystem}-{architecture}-javalang', 'src', 'jdk.zip')
             if os.path.exists(win_zip_location):
