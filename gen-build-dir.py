@@ -47,7 +47,7 @@ def get_JDK_release(operatingSystem: str, architecture: str, javaVersion: str) -
         case['18.0.1+10']:
             github_url = 'https: // github.com/adoptium/temurin18-binaries'
             open_jdk_slug = 'OpenJDK18U'
-            open_jdk_ver_slug = '18.0.1+10'
+            open_jdk_ver_slug = '18.0.1_10'
         case _:
             print("Unsupported version of java")
             exit(1)
