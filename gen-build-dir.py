@@ -39,12 +39,24 @@ def copy_templates(operatingSystem: str, architecture: str, javaVersion: str) ->
         config.write(configfile)
 
 def get_JDK_release(operatingSystem: str, architecture: str, javaVersion: str) -> None:
+    match javaVersion:
+        case['17.0.3+7']:
+            github_url = 'https: // github.com/adoptium/temurin17-binaries'
+            open_jdk_slug = 'OpenJDK17U'
+            open_jdk_ver_slug = '17.0.3_7'
+        case['18.0.1+10']:
+            github_url = 'https: // github.com/adoptium/temurin18-binaries'
+            open_jdk_slug = 'OpenJDK18U'
+            open_jdk_ver_slug = '18.0.1+10'
+        case _:
+            print("Unsupported version of java")
+            exit(1)
     src_dir = os.path.join(f'{operatingSystem}-{architecture}-javalang', 'src')
     javalang_dir = os.path.join(f'{operatingSystem}-{architecture}-javalang', 'src', 'javalang')
     jdk_extract_dir = os.path.join(f'{operatingSystem}-{architecture}-javalang', 'src', f'jdk-{javaVersion}')
     match operatingSystem:
         case ["windows"]:
-            java_url = f'https://github.com/adoptium/temurin17-binaries/releases/download/jdk-{javaVersion}/OpenJDK17U-jdk_{architecture}_{operatingSystem}_hotspot_17.0.3_7.zip'
+            java_url = f'{github_url}/releases/download/jdk-{javaVersion}/{open_jdk_slug}-jdk_{architecture}_{operatingSystem}_hotspot_{open_jdk_ver_slug}.zip'
             win_zip_location = os.path.join(f'{operatingSystem}-{architecture}-javalang', 'src', 'jdk.zip')
             if os.path.exists(win_zip_location):
                 print("JDK already downloaded, skipping download step")
@@ -55,7 +67,7 @@ def get_JDK_release(operatingSystem: str, architecture: str, javaVersion: str) -
                 os.remove(win_zip_location)
                 os.rename(jdk_extract_dir, javalang_dir)
         case _:
-            java_url = f'https://github.com/adoptium/temurin17-binaries/releases/download/jdk-{javaVersion}/OpenJDK17U-jdk_{architecture}_{operatingSystem}_hotspot_17.0.3_7.tar.gz'
+            java_url = f'{github_url}/releases/download/jdk-{javaVersion}/{open_jdk_slug}-jdk_{architecture}_{operatingSystem}_hotspot_{open_jdk_ver_slug}.tar.gz'
             tar_gz_location = os.path.join(f'{operatingSystem}-{architecture}-javalang', 'src', 'jdk.tar.gz')
             if os.path.exists(tar_gz_location):
                 print("JDK already downloaded, skipping download step")
@@ -76,7 +88,7 @@ def main() -> None:
     parser.add_argument("-a", "--architecture", metavar='architecture',
                         type=str, help='Specify an architecture')
     parser.add_argument("-j", "--java-version", metavar='java_ver',
-                        type=str, help='Specify a version of java', default='17.0.3+7')
+                        type=str, help='Specify a version of java (17.0.3+7 or 18.0.1+10)', default='17.0.3+7')
     
     args = parser.parse_args()
 

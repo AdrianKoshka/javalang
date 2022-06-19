@@ -37,6 +37,7 @@ The architecture's are any architecture Adoptium supports for the particular OS.
 ## Usage
 
 ```
+$ python3 ./gen-build-dir.py --help                         
 usage: gen-build-dir.py [-h] [-o os] [-a architecture] [-j java_ver]
 
 Toggle switch ports for link testing.
@@ -48,5 +49,5 @@ options:
   -a architecture, --architecture architecture
                         Specify an architecture
   -j java_ver, --java-version java_ver
-                        Specify a version of java
+                        Specify a version of java (17.0.3+7 or 18.0.1+10
 ```
