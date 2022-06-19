@@ -64,7 +64,7 @@ jobs:
         run: |
           cd windows-x64-javalang
           python3 -m venv .venv
-          source .venv/bin/activate
+          .venv\Scripts\Activate.ps1
           python3 -m pip install --upgrade pip setuptools build
           python3 -m build
       - name: Install and test the wheel
