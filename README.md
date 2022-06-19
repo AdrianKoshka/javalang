@@ -49,5 +49,5 @@ options:
   -a architecture, --architecture architecture
                         Specify an architecture
   -j java_ver, --java-version java_ver
-                        Specify a version of java (17.0.3+7 or 18.0.1+10
+                        Specify a version of java (17.0.3+7 or 18.0.1+10)
 ```
