@@ -2,11 +2,11 @@
 
 ⚠️ IF YOU USE THIS FOR PRODUCTION, IT IS AT YOUR OWN RISK ⚠️
 
-A python script which "generates" a python wheel configuratoin for a specified OS and architecture of [Adoptium's](https://adoptium.net) JDK.
+A python script which "generates" a python wheel configuratoin for a specified OS and architecture of [Adoptium's](https://adoptium.net) JDK/JRE.
 
 ## Why?
 
-I was inspired by the [ziglang](https://pypi.org/project/ziglang/) python package, so I decided to take [Adoptium's](https://adoptium.net) JDK and ship it as a python wheel.
+I was inspired by the [ziglang](https://pypi.org/project/ziglang/) python package, so I decided to take [Adoptium's](https://adoptium.net) JDK/JRE and ship it as a python wheel.
 
 ## How do I use this?
 
