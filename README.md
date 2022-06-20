@@ -23,7 +23,7 @@ Now you can find your wheel in `linux-x64-javalang/dist`. Once you install the w
 ```python
 import sys, subprocess
 
-subprocess.call([sys.executable, "-m", "javalang"])
+subprocess.call([sys.executable, "-m", "javalang", "--help"])
 ```
 
 The operating system supported are:
@@ -37,8 +37,8 @@ The architectures supported are any Adoptium supports for the particular OS.
 ## Usage
 
 ```
-$ python3 ./gen-build-dir.py --help                         
-usage: gen-build-dir.py [-h] [-o os] [-a architecture] [-j java_ver]
+$ python3 gen-build-dir.py --help
+usage: gen-build-dir.py [-h] [-o os] [-a architecture] [-j java_ver] [-r]
 
 Toggle switch ports for link testing.
 
@@ -50,4 +50,5 @@ options:
                         Specify an architecture
   -j java_ver, --java-version java_ver
                         Specify a version of java (17.0.3+7 or 18.0.1+10)
+  -r, --jre             Specify you want the JRE instead of the JDK
 ```

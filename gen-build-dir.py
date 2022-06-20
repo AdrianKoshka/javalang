@@ -98,7 +98,7 @@ def main() -> None:
                         type=str, help='Specify an architecture')
     parser.add_argument("-j", "--java-version", metavar='java_ver',
                         type=str, help='Specify a version of java (17.0.3+7 or 18.0.1+10)', default='17.0.3+7')
-    parser.add_argument("-r", "--jre", action='store_true')
+    parser.add_argument("-r", "--jre", action='store_true', help="Specify you want the JRE instead of the JDK")
     
     args = parser.parse_args()
 
