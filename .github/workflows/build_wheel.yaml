@@ -24,6 +24,27 @@ jobs:
           cd linux-x64-javalang
           python3 -m pip install dist/javalang*.whl
           python3 -m javalang --help
+  build-linux-arm64-wheel:
+    runs-on: rpi4-fed
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Run gen-build-dir.py
+        run: |
+          python3 gen-build-dir.py -o linux -a x64
+      - name: Build the wheel
+        run: |
+          cd linux-x64-javalang
+          python3 -m venv .venv
+          source .venv/bin/activate
+          python3 -m pip install --upgrade pip setuptools build
+          python3 -m build
+      - name: Install and test the wheel
+        run: |
+          cd linux-x64-javalang
+          python3 -m pip install dist/javalang*.whl
+          python3 -m javalang --help
   build-macos-wheel:
     runs-on: macos-12
 
