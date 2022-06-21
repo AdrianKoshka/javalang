@@ -12,11 +12,14 @@ def make_project_dirs(operatingSystem: str, architecture: str) -> None:
     src_dir = os.path.join(f'{operatingSystem}-{architecture}-javalang', 'src')
     if os.path.exists(template_dir):
         if os.path.exists(src_dir):
-            pass
+            print(f"{template_dir} and {src_dir} exist, skipping creation")
         else:
+            print(f"Making directory {src_dir}")
             os.mkdir(src_dir)
     else:
+        print(f"Making directory {template_dir}")
         os.mkdir(template_dir)
+        print(f"Making directory {src_dir}")
         os.mkdir(src_dir)
 
 
@@ -24,18 +27,24 @@ def copy_templates(operatingSystem: str, architecture: str, javaVersion: str) ->
     init_destination = os.path.join(f'{operatingSystem}-{architecture}-javalang', 'src', 'javalang', '__init__.py')
     pyproject_destination = os.path.join(f'{operatingSystem}-{architecture}-javalang', 'pyproject.toml')
     manifest_destination = os.path.join(f'{operatingSystem}-{architecture}-javalang', 'MANIFEST.in')
+    print(f"Copying pyproject.template.toml to {pyproject_destination}")
     shutil.copy("pyproject.template.toml", pyproject_destination)
     match operatingSystem:
         case 'mac':
+            print(f"Copying init_template_macos.py to {init_destination}")
             shutil.copy("init_template_macos.py", init_destination)
+            print(f"Copying manifest-template-macos.in to {manifest_destination}")
             shutil.copy("manifest-template-macos.in", manifest_destination)
         case _:
+            print(f"Copying init_template_macos.py to {init_destination}")
             shutil.copy("init_template.py", init_destination)
+            print(f"Copying manifest-template-macos.in to {manifest_destination}")
             shutil.copy("manifest-template.in", manifest_destination)
     config = configparser.ConfigParser()
     config.read(pyproject_destination)
     config['project']['version'] = f'"{javaVersion}"'
     with open(pyproject_destination, 'w') as configfile:
+        print(f"Setting {javaVersion} as package version in {pyproject_destination}")
         config.write(configfile)
 
 def get_JDK_release(operatingSystem: str, architecture: str, java_version: str, jre_or_jdk: bool) -> None:
@@ -65,28 +74,44 @@ def get_JDK_release(operatingSystem: str, architecture: str, java_version: str, 
             java_url = f'{github_url}/releases/download/jdk-{java_version}/{open_jdk_slug}-{open_jdk_edition}_{architecture}_{operatingSystem}_hotspot_{open_jdk_ver_slug}.zip'
             win_zip_location = os.path.join(f'{operatingSystem}-{architecture}-javalang', 'src', 'jdk.zip')
             if os.path.exists(win_zip_location):
-                print("JDK already downloaded, skipping download step")
+                if jre_or_jdk:
+                    print("JRE already downloaded, skipping download step")
+                else:
+                    print("JDK already downloaded, skipping download step")
             else:
+                if jre_or_jdk:
+                    print(f"Downloading JRE to {win_zip_location}")
+                else:
+                    print(f"Downloading JRE to {win_zip_location}")
                 urllib.request.urlretrieve(java_url, win_zip_location)
                 with ZipFile(win_zip_location, 'r') as zip_ref:
+                    print(f"Extracting {win_zip_location} to {jdk_extract_dir}")
                     zip_ref.extractall(src_dir)
+                print(f"Deleting {win_zip_location}")
                 os.remove(win_zip_location)
+                print(f"Renaming {jdk_extract_dir} to {javalang_dir}")
                 os.rename(jdk_extract_dir, javalang_dir)
         case _:
             java_url = f'{github_url}/releases/download/jdk-{java_version}/{open_jdk_slug}-{open_jdk_edition}_{architecture}_{operatingSystem}_hotspot_{open_jdk_ver_slug}.tar.gz'
             tar_gz_location = os.path.join(f'{operatingSystem}-{architecture}-javalang', 'src', 'jdk.tar.gz')
             if os.path.exists(tar_gz_location):
-                print("JDK already downloaded, skipping download step")
+                if jre_or_jdk:
+                    print("JRE already downloaded, skipping download step")
+                else:
+                    print("JDK already downloaded, skipping download step")
             else:
                 if jre_or_jdk:
-                    print("Downloading JRE")
+                    print(f"Downloading JRE to {tar_gz_location}")
                 else:
-                    print("Downloading JDK")
+                    print(f"Downloading JDK to {tar_gz_location}")
                 urllib.request.urlretrieve(java_url, tar_gz_location)
                 print("Download Finished")
                 with tarfile.open(tar_gz_location, 'r') as jdk_tar:
+                    print(f"Extracting {tar_gz_location} to {jdk_extract_dir}")
                     jdk_tar.extractall(src_dir)
+                print(f"Deleting {tar_gz_location}")
                 os.remove(tar_gz_location)
+                print(f"Renaming {jdk_extract_dir} to {javalang_dir}")
                 os.rename(jdk_extract_dir, javalang_dir)
 
 def main() -> None:
