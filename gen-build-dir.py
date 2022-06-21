@@ -84,6 +84,7 @@ def get_JDK_release(operatingSystem: str, architecture: str, java_version: str, 
                 else:
                     print(f"Downloading JRE to {win_zip_location}")
                 urllib.request.urlretrieve(java_url, win_zip_location)
+                print("Download Finished")
                 with ZipFile(win_zip_location, 'r') as zip_ref:
                     print(f"Extracting {win_zip_location} to {jdk_extract_dir}")
                     zip_ref.extractall(src_dir)

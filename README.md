@@ -2,7 +2,7 @@
 
 ⚠️ IF YOU USE THIS FOR PRODUCTION, IT IS AT YOUR OWN RISK ⚠️
 
-A python script which "generates" a python wheel configuratoin for a specified OS and architecture of [Adoptium's](https://adoptium.net) JDK/JRE.
+A python script which "generates" a python wheel configuration for a specified OS and architecture of [Adoptium's](https://adoptium.net) JDK/JRE.
 
 ## Why?
 
