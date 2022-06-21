@@ -67,7 +67,12 @@ def get_JDK_release(operatingSystem: str, architecture: str, java_version: str, 
             if os.path.exists(win_zip_location):
                 print("JDK already downloaded, skipping download step")
             else:
+                if jre_or_jdk:
+                    print("Downloading JRE")
+                else:
+                    print("Downloading JDK")
                 urllib.request.urlretrieve(java_url, win_zip_location)
+                print("Download Finished")
                 with ZipFile(win_zip_location, 'r') as zip_ref:
                     zip_ref.extractall(src_dir)
                 os.remove(win_zip_location)
