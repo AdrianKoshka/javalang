@@ -25,10 +25,13 @@ jobs:
           python3 -m pip install dist/javalang*.whl
           python3 -m javalang --help
   build-linux-arm64-wheel:
-    runs-on: rpi4-fed
+    runs-on: slvm
 
     steps:
       - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
 
       - name: Run gen-build-dir.py
         run: |
