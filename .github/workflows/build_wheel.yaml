@@ -25,7 +25,7 @@ jobs:
           python3 -m pip install dist/javalang*.whl
           python3 -m javalang --help
   build-linux-arm64-wheel:
-    runs-on: ARM64
+    runs-on: self-hosted
 
     steps:
       - uses: actions/checkout@v3
