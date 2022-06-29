@@ -35,11 +35,14 @@ def copy_templates(operatingSystem: str, architecture: str, javaVersion: str) ->
             copy("init_template_macos.py", init_destination)
             print(f"Copying manifest-template-macos.in to {manifest_destination}")
             copy("manifest-template-macos.in", manifest_destination)
-        case _:
+        case 'linux' | "windows":
             print(f"Copying init_template_macos.py to {init_destination}")
             copy("init_template.py", init_destination)
             print(f"Copying manifest-template-macos.in to {manifest_destination}")
             copy("manifest-template.in", manifest_destination)
+        case _:
+            print("Only operating systems supported are mac, windows, or linux")
+            exit(1)
     config = configparser.ConfigParser()
     config.read(pyproject_destination)
     config['project']['version'] = f'"{javaVersion}"'
@@ -58,8 +61,7 @@ def get_JDK_release(operatingSystem: str, architecture: str, java_version: str, 
             open_jdk_slug = 'OpenJDK18U'
             open_jdk_ver_slug = '18.0.1_10'
         case _:
-            print(
-                "Unsupported version of java, supported versions are 17.0.3+7 and 18.0.1+10")
+            print("Unsupported version of java, supported versions are 17.0.3+7 and 18.0.1+10")
             exit(1)
     if jre_or_jdk:
         open_jdk_edition = 'jre'
@@ -82,7 +84,7 @@ def get_JDK_release(operatingSystem: str, architecture: str, java_version: str, 
                 if jre_or_jdk:
                     print(f"Downloading JRE to {win_zip_location}")
                 else:
-                    print(f"Downloading JRE to {win_zip_location}")
+                    print(f"Downloading JDK to {win_zip_location}")
                 request.urlretrieve(java_url, win_zip_location)
                 print("Download Finished")
                 with ZipFile(win_zip_location, 'r') as zip_ref:
@@ -92,7 +94,7 @@ def get_JDK_release(operatingSystem: str, architecture: str, java_version: str, 
                 remove(win_zip_location)
                 print(f"Renaming {jdk_extract_dir} to {javalang_dir}")
                 rename(jdk_extract_dir, javalang_dir)
-        case _:
+        case "mac" | "linux":
             java_url: str = f'{github_url}/releases/download/jdk-{java_version}/{open_jdk_slug}-{open_jdk_edition}_{architecture}_{operatingSystem}_hotspot_{open_jdk_ver_slug}.tar.gz'
             tar_gz_location = path.join(f'{operatingSystem}-{architecture}-javalang', 'src', 'jdk.tar.gz')
             if path.exists(tar_gz_location):
@@ -114,6 +116,9 @@ def get_JDK_release(operatingSystem: str, architecture: str, java_version: str, 
                 remove(tar_gz_location)
                 print(f"Renaming {jdk_extract_dir} to {javalang_dir}")
                 rename(jdk_extract_dir, javalang_dir)
+        case _:
+            print("Only operating systems supported are mac, windows, or linux")
+            exit(1)
 
 def main() -> None:
     parser = argparse.ArgumentParser(
@@ -128,8 +133,13 @@ def main() -> None:
     
     args = parser.parse_args()
 
-    make_project_dirs(args.operating_system, args.architecture)
-    get_JDK_release(args.operating_system, args.architecture, args.java_version, args.jre)
-    copy_templates(args.operating_system, args.architecture, args.java_version)
+    match args.operating_system:
+        case "windows" | "linux" | "mac":
+            make_project_dirs(args.operating_system, args.architecture)
+            get_JDK_release(args.operating_system, args.architecture, args.java_version, args.jre)
+            copy_templates(args.operating_system, args.architecture, args.java_version)
+        case _:
+            print("Only operating systems supported are mac, windows, or linux")
+            exit(1)
 
 main()
