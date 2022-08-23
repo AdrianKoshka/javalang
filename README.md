@@ -52,3 +52,4 @@ options:
                         Specify a version of java (17.0.3+7 or 18.0.1+10)
   -r, --jre             Specify you want the JRE instead of the JDK
 ```
+
